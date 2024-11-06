@@ -1,0 +1,46 @@
+<!--
+Copyright 2024 Ross Naheedy
+This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along with this program. If not, see <https://www.gnu.org/licenses/>. 
+-->
+<!DOCTYPE html>
+<html>
+<head>
+<script>
+  function GotoURL(F) {
+// What is dictated by the selection box in our form
+    var What=F.utype.options[F.utype.selectedIndex].value;
+// U holds URLs in case we're not using search engines
+    var U='';
+// Where is the query the user typed in
+    var Where=F.u.value;
+    if (What==='http') U+='http://'+Where;
+    else if (What==='https') U+='https://'+Where;
+    else if (What==='ddg') U+='https://duckduckgo.com/?q='+encodeURIComponent(Where);
+    else if (What==='goog') U+='https://www.google.com/search?q='+encodeURIComponent(Where);
+    else if (What==='bing') U+='https://www.bing.com/search?q='+encodeURIComponent(Where);
+    if (U!=='') window.open(U,'_blank');
+    return false;
+  }
+</script>
+</head>
+<body onLoad="document.getElementById('query').focus();">
+
+<!-- Our effort to get around browser freezing on opening new URLs -->
+<form target=_blank name=inputform onSubmit="GotoURL(this);">
+  <input type=submit hidden />
+  Enter URL:
+  <select name=utype>
+    <option value=https selected>https://</option>
+    <option value=http>http://</option>
+    <option value=ddg>Duck Duck Go</option>
+    <option value=goog>Google Search</option>
+    <option value=bing>Bing</option>
+  </select>
+  <input name=u size=80 id=query />
+</form>
+
+</body></html>
